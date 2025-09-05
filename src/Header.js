@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 import { useStateValue } from "./StateProvider";
 import { signOut } from "firebase/auth";
 import { auth } from "./firebase";
+import { totalQuantity } from "./reducer";
 
-function Header() {
+function Header(userAuth) {
   const [{ basket, user }, dispatch] = useStateValue();
 
   const handleAuthentication = () => {
@@ -31,7 +32,7 @@ function Header() {
       </div>
 
       <div className="header__nav">
-        <Link to={!user && "/login"}>
+        <Link to={(!user || userAuth) && "/login"}>
           <div onClick={handleAuthentication} className="header__option">
             <span className="header__optionLineOne">
               Hello {user ? user.email : "Guest"}
@@ -41,11 +42,19 @@ function Header() {
             </span>
           </div>
         </Link>
-        <div className="header__option">
-          <span className="header__optionLineOne">Returns</span>
-          <span className="header__optionLineTwo">& Orders</span>
-        </div>
-
+        <Link to={user && "/orders"}>
+          <div
+            onClick={(e) => {
+              if (!user) {
+                alert("You need to Login First");
+              }
+            }}
+            className="header__option"
+          >
+            <span className="header__optionLineOne">Returns</span>
+            <span className="header__optionLineTwo">& Orders</span>
+          </div>
+        </Link>
         <div className="header__option">
           <span className="header__optionLineOne">Your</span>
           <span className="header__optionLineTwo">Prime</span>
@@ -55,7 +64,7 @@ function Header() {
           <div className="header__optionBasket">
             <ShoppingBasketIcon />
             <span className="header__optionLineTwo header__basketCount">
-              {basket?.length}
+              {totalQuantity(basket)}
             </span>
           </div>
         </Link>

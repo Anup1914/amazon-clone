@@ -14,7 +14,7 @@ function Login() {
 
   const signIn = (e) => {
     e.preventDefault();
-
+    // we are using firebase authorization here
     signInWithEmailAndPassword(auth, email, password)
       .then((auth) => {
         navigate("/");

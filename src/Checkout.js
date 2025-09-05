@@ -3,6 +3,7 @@ import "./Checkout.css";
 import Subtotal from "./Subtotal";
 import { useStateValue } from "./StateProvider";
 import CheckoutProduct from "./CheckoutProduct";
+import { motion, AnimatePresence } from "framer-motion";
 
 function Checkout() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -18,15 +19,27 @@ function Checkout() {
         <div>
           <h3>Hello, {user?.email}</h3>
           <h2 className="checkout__title">Your shopping Basket</h2>
-          {basket.map((item) => (
-            <CheckoutProduct
-              id={item.id}
-              title={item.title}
-              image={item.image}
-              price={item.price}
-              rating={item.rating}
-            />
-          ))}
+          <AnimatePresence>
+            {basket.map((item) => (
+              <motion.div
+                key={item.id} // 🔑 important for animations
+                initial={{ opacity: 0, y: 20 }} // start state
+                animate={{ opacity: 1, y: 0 }} // animate to
+                exit={{ opacity: 0, y: -20 }} // when removed
+                transition={{ duration: 0.5 }} // smoothness
+              >
+                <CheckoutProduct
+                  id={item.id}
+                  title={item.title}
+                  image={item.image}
+                  price={item.price}
+                  rating={item.rating}
+                  quantity={item.quantity}
+                  hideQuantity
+                />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
       <div className="checkout__right">
