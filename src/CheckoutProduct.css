@@ -75,3 +75,18 @@
   margin: 0 10px;
   font-weight: bold;
 }
+
+@media (max-width: 400px) {
+  .checkoutProduct__image {
+    width: 140px;
+    height: 140px;
+  }
+  .checkoutProduct__title {
+    font-size: 13px;
+    font-weight: 800;
+  }
+
+  .checkoutProduct__info {
+    width: 180px;
+  }
+}

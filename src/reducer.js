@@ -1,5 +1,7 @@
+const savedBasket = localStorage.getItem("basket");
+
 export const initialState = {
-  basket: [],
+  basket: savedBasket ? JSON.parse(savedBasket) : [],
   user: null,
 };
 
@@ -61,6 +63,7 @@ const reducer = (state, action) => {
       };
 
     case "EMPTY_BASKET":
+      localStorage.removeItem("basket"); // clear cart from storage
       return {
         ...state,
         basket: [],

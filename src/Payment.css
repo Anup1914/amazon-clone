@@ -50,3 +50,13 @@
   border-color: #a88734 #9c7e31 #847a29;
   color: #111;
 }
+
+@media (max-width: 600px) {
+  .payment__section__mobile {
+    display: flex;
+    flex-direction: column;
+  }
+  .payment__address {
+    padding-left: 10%;
+  }
+}
